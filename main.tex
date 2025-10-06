@@ -1,0 +1,1510 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% ---- Paquetes básicos ----
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+\else
+  \usepackage{fontspec}
+  \setmainfont{Latin Modern Roman}
+\fi
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+\usepackage{forest}
+
+\usepackage{caption}
+\captionsetup{
+  font=small,            % tamaño del texto del pie
+  labelfont=bf,          % "Figura 1.1:" en negrita
+  format=hang,           % alinear líneas tras la etiqueta
+  justification=justified,  % o 'raggedright' si prefieres bandera izquierda
+  singlelinecheck=true, % que no cambie a centrado en una sola línea
+  width=\linewidth,      % el pie ocupa el ancho del texto
+  skip=6pt,              % espacio entre figura y pie
+  margin=0pt             % sin márgenes extra laterales en el caption
+}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{float}
+
+\newcommand{\pendiente}{\noindent\textit{(Contenido pendiente.)}\par}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{csquotes}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  pdfauthor={Álvaro Viña Pérez},
+  pdftitle={TFG - Estructura oficial}
+}
+\usepackage{cleveref}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,frame=single}
+% (Opcional) Minted para código con resaltado: requiere -shell-escape
+% \usepackage{minted}
+
+% ---- Bibliografía ----
+\usepackage[backend=biber,style=numeric,sorting=nyt]{biblatex}
+\addbibresource{library.bib} % crea un refs.bib en el proyecto
+
+% ---- Glosario y acrónimos (opcional) ----
+\usepackage[acronym,nonumberlist]{glossaries}
+\makenoidxglossaries
+\setglossarysection{subsubsection}
+
+% Crear glosario de definiciones
+\newglossaryentry{robot}{
+    name={Robot},
+    text={robot},
+    plural={robots},
+    description={Máquina programable capaz de realizar tareas de forma autónoma o semiautónoma, generalmente mediante la ejecución de movimientos precisos y repetitivos.}
+}
+\newglossaryentry{cinematica}{
+    name={Cinemática},
+    description={Rama de la mecánica que estudia el movimiento de los cuerpos sin considerar las fuerzas que lo producen. En robótica, se refiere al análisis del movimiento de los manipuladores y sus eslabones.}
+}
+
+\newglossaryentry{redneuronal}{
+    name={Red Neuronal},
+    description={Modelo computacional inspirado en la estructura y funcionamiento del cerebro humano, compuesto por nodos (neuronas) interconectados que procesan información y aprenden a partir de datos.}
+}
+\newglossaryentry{matlab}{
+    name={Matlab},
+    description={Entorno de programación y cálculo numérico desarrollado por MathWorks, ampliamente utilizado en ingeniería y ciencias para el análisis de datos, simulación y desarrollo de algoritmos.}
+}
+\newglossaryentry{python}{
+    name={Python},
+    description={Lenguaje de programación de alto nivel, interpretado y de propósito general, conocido por su sintaxis clara y legibilidad, utilizado en una amplia variedad de aplicaciones, desde desarrollo web hasta análisis de datos y aprendizaje automático.}
+}
+
+
+% Definición de acrónimos
+\newacronym{IDeTIC}{IDeTIC}{Instituto para el Desarrollo Tecnológico y la Innovación en Comunicaciones}
+\newacronym{HT}{HT}{Humano-Tableta}
+\newacronym{R}{R}{Robot}
+\newacronym{RT}{RT}{Robot-Tableta}
+\newacronym{WIPL}{WIPL}{Wacom Intuos Pro Large}
+\newacronym{IOTP}{IOTP}{Wacom IOT Paper 3}
+\newacronym{UR5}{UR5}{Universal Robots 5}
+\newacronym{IDE}{IDE}{Entorno de Desarrollo Integrado (\textit{Integrated Development Environment})}
+\newacronym{CSV}{CSV}{Archivo de valores separados por comas (\textit{Comma-Separated Values})}
+\newacronym{HTR}{HTR}{Error entre el movimiento humano y el ejecutado por el robot}
+\newacronym{RRT}{RRT}{Error entre el movimiento ejecutado por el robot y el registrado por la tableta}
+\newacronym{HTRT}{HTRT}{Error entre el movimiento humano y el registrado por la tableta}
+\newacronym{RMSE}{RMSE}{Root Mean Square Error}
+\newacronym{MAE}{MAE}{Mean Absolute Error}
+\newacronym{MSE}{MSE}{Mean Squared Error}
+\newacronym{MTP}{MTP}{Media Transfer Protocol}
+
+
+
+% ---- Comandos útiles ----
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\figref}[1]{\Cref{#1}}
+\newcommand{\tabref}[1]{\Cref{#1}}
+
+\begin{document}
+
+% ============ ÍNDICE ============
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+\pagenumbering{arabic}
+
+% ==============================================
+% DOCUMENTO I: MEMORIA DESCRIPTIVA
+% (Estructura prioritaria según tu solicitud)
+% ==============================================
+\chapter{Documento I: Memoria Descriptiva}
+\clearpage
+
+\section{Información previa}\label{sec:info-previa}
+
+\subsection{Introducción}
+
+
+En la actualidad, los sistemas de digitalización han adquirido una gran relevancia en numerosos ámbitos científicos y tecnológicos. 
+Dispositivos como las tabletas gráficas permiten registrar de manera precisa trazos y movimientos, lo que abre la puerta a múltiples 
+aplicaciones que van desde el diseño asistido hasta el análisis del comportamiento humano. Sin embargo, todo instrumento de medida 
+presenta un margen de error, y conocer dicho error resulta esencial para valorar la fiabilidad de los datos recogidos y garantizar 
+la validez de los estudios que se apoyan en ellos.  
+
+El análisis de la escritura constituye un campo especialmente interesante dentro de este marco, ya que la forma en la que una persona 
+escribe puede ofrecer información sobre sus capacidades motoras, cognitivas o incluso sobre posibles alteraciones neurológicas. 
+Por ello, disponer de un sistema que permita comparar la escritura humana con la reproducida por un robot o capturada por distintos 
+dispositivos digitalizadores ofrece una oportunidad única para estudiar cómo se generan los trazos y qué diferencias se introducen 
+por efecto del medio utilizado.  
+
+Además de su interés puramente técnico, la posibilidad de caracterizar y cuantificar estos errores abre nuevas líneas de aplicación 
+en el desarrollo de herramientas basadas en inteligencia artificial. Sistemas entrenados con este tipo de datos pueden contribuir 
+a la detección temprana de enfermedades, al análisis del envejecimiento motor o a la mejora de interfaces hombre-máquina en el ámbito 
+médico y educativo. Así, el estudio de los errores de digitalización no debe entenderse únicamente como un ejercicio académico, 
+sino como un paso necesario hacia el aprovechamiento de la escritura como fuente de información biomédica.  
+
+El presente trabajo se centra en la comparación de distintos métodos de registro y reproducción de la escritura, empleando tanto la 
+acción directa de un usuario sobre una tableta como la ejecución de trazos mediante un robot colaborativo. El proceso seguido consiste, 
+a grandes rasgos, en capturar un conjunto de palabras, reproducirlas en diferentes sistemas y analizar las diferencias existentes 
+entre los resultados. A partir de dichas comparaciones es posible estimar el error asociado a cada dispositivo y obtener conclusiones 
+sobre la fiabilidad de los datos que generan.  
+
+En definitiva, este estudio pretende aportar una visión global sobre la importancia de conocer las limitaciones de los sistemas de 
+digitalización, destacando su potencial como herramienta para el análisis de la escritura y su aplicación futura en el entrenamiento 
+de algoritmos de inteligencia artificial destinados al ámbito médico y al desarrollo de tecnologías de apoyo.  
+
+\subsection{Peticionario}
+
+El presente proyecto ha sido solicitado por el \acrfull{IDeTIC}, en el marco de las actividades académicas
+vinculadas al Grado en Ingeniería Electrónica Industrial y Automática de la Escuela de
+Ingenieros Industriales y Civiles de la Universidad de Las Palmas de Gran Canaria.
+
+\subsection{Antecedentes}
+
+La tecnología de captura de movimiento permite registrar movimientos físicos
+y digitalizarlos con el fin de analizarlos o replicarlos en entornos digitales.
+A pesar de los avances alcanzados en los últimos años, estos sistemas todavía
+enfrentan un reto importante: su precisión y fiabilidad siguen siendo
+insuficientes para reproducir con exactitud los movimientos humanos mediante
+un brazo robótico.  
+
+El uso de técnicas de captura de movimiento no es reciente. Sus primeras
+aplicaciones se dieron en el ámbito de la animación digital y la industria del
+entretenimiento, donde se empleaban para trasladar los gestos de actores a
+personajes virtuales. Con el paso del tiempo, la tecnología se ha extendido a
+sectores tan diversos como la ingeniería, la medicina, el deporte y la robótica,
+en los que la necesidad de registrar trayectorias con precisión ha cobrado
+mayor relevancia.  
+
+Los instrumentos de digitalización de movimiento, como las tabletas gráficas
+y los sensores de movimiento tridimensional (3D), se han consolidado como
+herramientas fundamentales en ámbitos como la robótica, la animación digital
+y la medicina. Estos dispositivos proporcionan a los profesionales la capacidad
+de capturar, manipular y analizar movimientos de manera más eficiente y
+precisa que mediante técnicas tradicionales.  
+
+En particular, las tabletas gráficas permiten registrar movimientos en dos
+dimensiones. Son dispositivos relativamente accesibles y fáciles de utilizar,
+aunque su nivel de precisión depende en gran medida de la calidad y la gama
+del producto. Por otra parte, los sensores de movimiento 3D ofrecen la
+posibilidad de capturar desplazamientos en un espacio tridimensional,
+aportando una representación más realista y completa, si bien presentan un
+coste de adquisición elevado y una mayor complejidad técnica en su uso e
+integración.  
+
+Más allá de las diferencias entre dispositivos, existen limitaciones comunes en
+este tipo de tecnologías: la necesidad de calibración frecuente, la influencia
+del ruido en la señal, la latencia en la transmisión de datos y la dependencia
+del hardware utilizado. Estas restricciones pueden comprometer la fiabilidad
+del sistema, especialmente en aplicaciones donde se requiere alta precisión,
+como en la interacción humano–robot o la programación automática de
+trayectorias.  
+
+En este contexto, el presente proyecto plantea un análisis comparativo de los
+errores generados por diferentes instrumentos digitalizadores. El propósito es
+comprender cómo dichos errores afectan a la precisión y fiabilidad de los
+sistemas de captura, ya que estos aspectos son determinantes para el correcto
+funcionamiento de aplicaciones en las que la exactitud del movimiento resulta
+crítica, como la interacción humano–robot, la rehabilitación asistida por
+robot o la simulación de procesos en entornos virtuales.
+
+\subsection{Ubicación}
+El proyecto se llevó a cabo en el \todo{Nombre del laboratorio} del IDeTIC. 
+En la \figref{fig:UbicacionCampus} se muestra la ubicación del pabellon donde 
+se situa el laboratorio dentro del campus universitario, 
+mientras que en la \figref{fig:UbicacionLP} se indica su 
+localización en el municipio de Las Palmas de Gran Canaria.
+
+\begin{figure}[h]
+  \begin{subfigure}[b]{0,4\textwidth}
+    \centering
+    \includegraphics[height=4.2cm,keepaspectratio]{figuras/ubicacionCampus.png}
+    \subcaption{Ubicación del laboratorio dentro del campus universitario.}
+    \label{fig:UbicacionCampus}  
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0,4\textwidth}
+    \centering
+    \includegraphics[height=4.2cm,keepaspectratio]{figuras/ubicacionLP.png}
+    \subcaption{Ubicación del laboratorio en el municipio de Las Palmas.}
+    \label{fig:UbicacionLP}   
+  \end{subfigure}
+\caption{Ubicación del laboratorio donde se desarrolló el proyecto.}
+\label{fig:UbicacionLaboratorio}
+\end{figure}
+
+\subsection{Necesidades a satisfacer y justificación}
+
+El desarrollo del presente proyecto responde a la necesidad de contar con
+herramientas que permitan evaluar con rigor la precisión y fiabilidad de los
+sistemas de captura de movimiento empleados en la interacción con brazos
+robóticos. A partir del análisis de los antecedentes, se identifican las
+siguientes necesidades principales:
+
+\begin{itemize}
+    \item \textbf{Medir objetivamente los errores de digitalización}: disponer
+    de un procedimiento que cuantifique la diferencia entre el movimiento
+    humano, el ejecutado por el brazo robótico y el registrado por los
+    instrumentos de captura.
+
+    \item \textbf{Comparar distintas tecnologías de captura}: analizar el
+    comportamiento de tabletas gráficas de diferentes gamas frente a sensores
+    tridimensionales, con el fin de establecer criterios de selección en
+    función de la relación coste–prestaciones.
+
+    \item \textbf{Mejorar la fiabilidad de la interacción humano–\glspl{robot}}:
+    detectar las limitaciones de cada sistema de captura que puedan afectar a
+    la ejecución precisa de trayectorias y proponer estrategias de mitigación.
+
+    \item \textbf{Facilitar la integración en entornos académicos e
+    industriales}: generar una base de conocimiento que permita seleccionar
+    tecnologías de digitalización adecuadas para proyectos de investigación,
+    docencia y aplicaciones prácticas en automatización y robótica.
+
+\end{itemize}
+
+En conjunto, estas necesidades reflejan la importancia de evaluar de forma
+crítica las herramientas de captura de movimiento y su impacto en la
+programación y control de \glspl{robot}, garantizando resultados reproducibles y
+útiles para futuras aplicaciones en interacción humano–robot.
+
+\subsection{Objeto del trabajo}
+
+El objeto del presente proyecto es el estudio, caracterización y análisis de los errores producidos por distintos instrumentos digitalizadores de captura de movimiento cuando un brazo robótico ejecuta trayectorias previamente programadas.
+
+El trabajo persigue comprender de forma detallada cómo se comportan diferentes sistemas de adquisición de movimiento frente a la ejecución real del \gls{robot} y frente al gesto humano que origina la trayectoria. Para ello, el análisis se centra en tres tipos de error principales:
+\begin{enumerate}
+	\item El error existente entre el movimiento realizado por el usuario y el que finalmente ejecuta el brazo robótico.
+	\item El error entre el movimiento ejecutado por el brazo robótico y el que registran los instrumentos digitalizadores.
+	\item El error resultante de comparar directamente el movimiento realizado por el usuario con el registrado por los instrumentos digitalizadores.
+\end{enumerate}
+
+Como instrumentos de digitalización se emplearán tabletas gráficas de 
+distintas gamas, seleccionadas en función de su precio y calidad, 
+con el fin de estudiar cómo estas variables influyen en la precisión 
+de los datos obtenidos. Además, se incorporarán sensores de captura 
+de movimiento tridimensional (3D), que permitirán contrastar y 
+complementar los resultados derivados de las tabletas, ofreciendo 
+una perspectiva más amplia y comparativa de las capacidades de cada 
+tecnología.
+
+Este enfoque permitirá no solo cuantificar los errores presentes en cada etapa
+(Usuario–Robot, Robot–Instrumento, Usuario–Instrumento),
+sino también identificar las limitaciones y fortalezas de
+cada sistema de digitalización. Con ello se busca establecer
+una base objetiva que facilite la selección de la tecnología
+más adecuada en función de los requisitos de precisión, coste
+y aplicabilidad en distintos entornos de trabajo, especialmente
+en el ámbito de la interacción humano–robot y la programación de
+trayectorias asistidas.
+
+\subsection{Definiciones y abreviaturas}
+\printnoidxglossary[title={Definiciones}]
+\printnoidxglossary[type=\acronymtype,title={Acrónimos}]
+
+\subsection{Marco teórico}
+
+
+El marco teórico de este proyecto se fundamenta en los principios y conceptos
+básicos de la robótica, en particular aquellos relacionados con la \gls{cinematica},
+la dinámica y el control de manipuladores robóticos. Como referencia principal
+se emplea el libro \textit{Fundamentos de Robótica} de Barrientos et al.
+\cite{barrientos2014}, en el cual se abordan de manera sistemática los
+aspectos esenciales de la robótica moderna.
+
+De acuerdo con Barrientos et al. \cite{barrientos2014}, un manipulador robótico
+puede describirse como un conjunto de eslabones articulados que permiten
+ejecutar movimientos en el espacio tridimensional mediante la aplicación de
+leyes de \gls{cinematica} y dinámica. En este contexto, la caracterización de la
+posición, la orientación y la trayectoria del efector final resulta
+fundamental para garantizar la precisión y repetibilidad del sistema.
+
+Asimismo, el estudio de los sistemas de referencia, las transformaciones
+homogéneas y los algoritmos de control asociados es imprescindible para
+comprender cómo el \gls{robot} interpreta y ejecuta las trayectorias programadas.
+Estos conceptos se aplicarán directamente en el presente proyecto para
+analizar la diferencia entre el movimiento humano de referencia, el movimiento
+ejecutado por el brazo robótico y el movimiento registrado por los distintos
+instrumentos digitalizadores.
+
+De este modo, el marco teórico no solo proporciona las bases matemáticas y
+conceptuales de la robótica, sino que también sustenta la motivación del
+proyecto: evaluar la fiabilidad y precisión de diferentes instrumentos de
+captura de movimiento en la interacción con un manipulador robótico.
+
+\subsubsection{Traslación entre sistemas de referencia}
+
+En robótica, el uso de sistemas de referencia es fundamental para describir la
+posición y el movimiento de un manipulador en el espacio. Cuando se trabaja con
+más de un sistema de coordenadas, resulta necesario establecer relaciones que
+permitan expresar un punto definido en un sistema en términos de otro.  
+
+La traslación entre sistemas de referencia consiste en desplazar el origen de
+un sistema con respecto a otro, manteniendo la orientación de sus ejes
+paralela. Matemáticamente, si se considera un sistema de referencia $\{A\}$ y
+otro sistema $\{B\}$ cuyo origen se encuentra en el vector
+$\mathbf{p} = [p_x, p_y, p_z]^T$ respecto a $\{A\}$, cualquier punto
+$\mathbf{r}_B$ expresado en coordenadas del sistema $\{B\}$ puede representarse
+en el sistema $\{A\}$ como la ecuación~\eqref{eq:traslacion}:
+
+\begin{equation}
+\mathbf{r}_A = \mathbf{r}_B + \mathbf{p}
+\label{eq:traslacion}
+\end{equation}
+
+donde $\mathbf{r}_A$ es el vector de posición del punto en el sistema $\{A\}$.
+Esta expresión refleja que la traslación se implementa mediante la suma del
+vector que define el desplazamiento entre los orígenes.  
+
+En términos matriciales, la operación puede escribirse como la ecuacion~\eqref{eq:traslacion_matriz}:
+
+\begin{equation} 
+\begin{bmatrix}
+x_A \\ y_A \\ z_A
+\end{bmatrix}
+=
+\begin{bmatrix}
+x_B \\ y_B \\ z_B
+\end{bmatrix}
++
+\begin{bmatrix}
+p_x \\ p_y \\ p_z
+\end{bmatrix}
+\label{eq:traslacion_matriz}
+\end{equation}
+
+
+De esta forma, la traslación permite relacionar de manera directa dos sistemas
+de referencia que comparten la misma orientación, siendo esta una herramienta
+básica para la modelización de manipuladores robóticos y el cálculo de
+trayectorias.  
+
+Tal y como señala Barrientos et al. \cite{barrientos2014}, esta formulación es
+el punto de partida para operaciones más complejas que incluyen además
+rotaciones y, en general, transformaciones homogéneas, necesarias para
+describir la \gls{cinematica} de \glspl{robot} manipuladores.
+
+\subsubsection{Rotación entre sistemas de referencia}
+
+Cuando dos sistemas de coordenadas comparten el mismo origen, pero presentan
+una orientación diferente de sus ejes, es necesario establecer la relación que
+permite expresar un vector definido en un sistema en términos del otro. Este
+proceso se denomina \textbf{rotación entre sistemas de referencia} como se 
+representa en la~\figref{fig:Rotacion_sistemas_referencia}.  
+
+Sea un sistema $\{A\}$ con ejes $\hat{x}_A$, $\hat{y}_A$ y $\hat{z}_A$, y un
+sistema $\{B\}$ cuyos ejes $\hat{x}_B$, $\hat{y}_B$ y $\hat{z}_B$ están
+rotados respecto a $\{A\}$. La posición de un punto $\mathbf{r}$ expresada en
+el sistema $\{B\}$ se puede convertir al sistema $\{A\}$ mediante una matriz de
+rotación $\mathbf{R}$~\eqref{eq:rotacion_matriz}:
+
+\begin{equation}
+\mathbf{r}_A = \mathbf{R} \, \mathbf{r}_B
+\label{eq:rotacion_matriz}
+\end{equation}
+
+donde $\mathbf{R}$ es una matriz ortogonal de dimensión $3 \times 3$, cuyas
+columnas están formadas por las componentes de los vectores unitarios de los
+ejes de $\{B\}$ expresados en el sistema $\{A\}$.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{figuras/rotacion2.png}
+\caption{Rotación entre sistemas de referencia. De Barrientos et al. \cite{barrientos2014}.}
+\label{fig:Rotacion_sistemas_referencia}
+\end{figure}
+
+De forma general, la matriz de rotación cumple las siguientes propiedades
+(Barrientos et al., \cite{barrientos2014}):  
+\begin{itemize}
+    \item $\mathbf{R}^T \mathbf{R} = \mathbf{I}$ (ortogonalidad).  
+    \item $\det(\mathbf{R}) = +1$ (preserva la orientación).  
+\end{itemize}
+
+En robótica es habitual trabajar con rotaciones elementales alrededor de los
+ejes principales. Estas se representan mediante matrices específicas:  
+
+- Rotación alrededor del eje $x$ un ángulo $\theta$:  
+\begin{equation}
+R_x(\theta) =
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & \cos \theta & -\sin \theta \\
+0 & \sin \theta & \cos \theta
+\end{bmatrix}
+\label{eq:rotacion_matrizX}
+\end{equation}
+
+- Rotación alrededor del eje $y$ un ángulo $\theta$:  
+\begin{equation}
+R_y(\theta) =
+\begin{bmatrix}
+\cos \theta & 0 & \sin \theta \\
+0 & 1 & 0 \\
+-\sin \theta & 0 & \cos \theta
+\end{bmatrix}
+\label{eq:rotacion_matrizY}
+\end{equation}
+
+- Rotación alrededor del eje $z$ un ángulo $\theta$:  
+\begin{equation}
+R_z(\theta) =
+\begin{bmatrix}
+\cos \theta & -\sin \theta & 0 \\
+\sin \theta & \cos \theta & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\label{eq:rotacion_matrizZ}
+\end{equation}
+
+Estas rotaciones básicas pueden combinarse para describir cualquier cambio de
+orientación en el espacio tridimensional. El orden en que se apliquen las
+rotaciones es determinante, ya que la composición no es conmutativa.  
+
+Tal y como señala Barrientos et al. \cite{barrientos2014}, la correcta
+formulación de estas transformaciones es esencial en la \gls{cinematica} de \glspl{robot},
+pues permite relacionar las coordenadas de puntos y vectores entre distintos
+eslabones de un manipulador articulado.
+
+
+\subsubsection{Matrices de transformación homogénea}
+
+La combinación de traslaciones y rotaciones es fundamental en la modelización
+de manipuladores robóticos, ya que permite describir cómo se relacionan entre sí
+los distintos sistemas de referencia asociados a cada eslabón. Para expresar
+de manera compacta estas transformaciones se recurre a las
+\textbf{matrices de transformación homogénea}.
+
+Una matriz de transformación homogénea $\,\mathbf{T}\,$ es de dimensión
+$4 \times 4$ y tiene la siguiente forma general:
+
+\begin{equation}
+\mathbf{T} =
+\begin{bmatrix}
+\mathbf{R} & \mathbf{p} \\
+\mathbf{0}^T & 1
+\end{bmatrix}
+\label{eq:transformacion_homogenea}
+\end{equation}
+
+donde:
+\begin{itemize}
+    \item $\mathbf{R}$ es la matriz de rotación $3 \times 3$ que define la
+    orientación de un sistema de referencia $\{B\}$ respecto a otro $\{A\}$.
+    \item $\mathbf{p} = [p_x, p_y, p_z]^T$ es el vector de traslación que
+    representa la posición del origen de $\{B\}$ respecto a $\{A\}$.
+    \item $\mathbf{0}^T = [0 \; 0 \; 0]$ es un vector fila que completa la
+    estructura de la matriz.
+\end{itemize}
+
+Si un punto $\mathbf{r}_B$ se expresa en coordenadas homogéneas en el sistema
+$\{B\}$, es decir, como $\mathbf{r}_B^h = [x_B, y_B, z_B, 1]^T$, su
+representación en el sistema $\{A\}$ se obtiene aplicando:
+
+\begin{equation}
+\mathbf{r}_A^h = \mathbf{T} \, \mathbf{r}_B^h
+\label{eq:transformacion_homogenea_aplicacion}
+\end{equation}
+
+De esta forma, la matriz homogénea permite, en una sola operación matricial,
+realizar simultáneamente la rotación y traslación entre dos sistemas de
+referencia.  
+
+Entre las propiedades más relevantes de las transformaciones homogéneas se
+encuentran (Barrientos et al., \cite{barrientos2014}):
+\begin{itemize}
+    \item La composición de transformaciones se obtiene mediante el producto
+    de matrices homogéneas.
+    \item La inversa de una transformación homogénea también es una matriz
+    homogénea, lo que facilita el cambio entre sistemas de referencia.
+    \item Preservan la estructura geométrica de los puntos y vectores
+    transformados.
+\end{itemize}
+
+En robótica, las matrices de transformación homogénea constituyen la base para
+la formulación de la \gls{cinematica} directa e inversa, permitiendo describir la
+posición y orientación del efector final en función de las variables articulares
+del manipulador.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{figuras/homogeneas.png}
+\caption{Transformación homogénea entre sistemas de referencia. De Barrientos et al. \cite{barrientos2014}.}
+\label{fig:Transformacion_homogenea}  
+\end{figure}
+
+\subsubsection{\gls{cinematica} de \glspl{robot}}
+
+La \gls{cinematica} de un \gls{robot} estudia el movimiento de su estructura mecánica sin
+considerar las fuerzas que lo producen. En el caso de manipuladores
+articulados, el análisis cinemático resulta fundamental para establecer la
+relación entre las variables articulares (ángulos de las articulaciones o
+desplazamientos lineales) y la posición y orientación del efector final en el
+espacio de trabajo.
+
+Se distinguen dos problemas principales en la \gls{cinematica} de \glspl{robot}:
+
+\begin{itemize}
+    \item \textbf{\gls{cinematica} directa}: consiste en determinar la posición y
+    orientación del efector final a partir de los valores de las variables
+    articulares. Matemáticamente, puede expresarse como una función
+    \begin{equation}
+    \mathbf{x} = f(\mathbf{q})
+    \label{eq:cinematica_directa}
+    \end{equation}
+    donde $\mathbf{q}$ es el vector de coordenadas articulares y $\mathbf{x}$
+    representa la configuración (posición y orientación) del efector final en
+    el espacio cartesiano. Este problema siempre tiene una única solución y se
+    resuelve aplicando las matrices de transformación homogénea a lo largo de
+    la cadena \gls{cinematica} del \gls{robot}.
+
+    \captionsetup{width=\linewidth}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/Cinematica.png}
+    \caption{Modelo 3D del UR5 y su modelo cinemático correspondiente. De Research Gate et al. \cite{researchgate}.}
+    \label{fig:Cinematica_directa}
+    \end{figure}
+
+    \item \textbf{\gls{cinematica} inversa}: consiste en determinar los valores de las
+    variables articulares necesarios para que el efector final alcance una
+    posición y orientación deseadas. Se formula como
+    \begin{equation}
+    \mathbf{q} = f^{-1}(\mathbf{x})
+    \label{eq:cinematica_inversa}
+    \end{equation}
+    A diferencia de la \gls{cinematica} directa, este problema puede tener múltiples
+    soluciones, una solución única o incluso no tener solución, dependiendo de
+    la geometría del \gls{robot} y de las restricciones del movimiento.
+\end{itemize}
+
+En robótica, la \gls{cinematica} directa es empleada principalmente para simular y
+validar el movimiento a partir de valores de entrada conocidos, mientras que la
+\gls{cinematica} inversa resulta indispensable en tareas de control y planificación
+de trayectorias, ya que permite calcular los comandos articulares necesarios
+para alcanzar un objetivo en el espacio de trabajo.
+
+Tal y como señalan Barrientos et al. \cite{barrientos2014}, el dominio de estos
+conceptos es esencial en el diseño y control de manipuladores, pues constituye
+la base de aplicaciones como la interacción humano–robot, la programación por
+demostración y, en el caso del presente proyecto, la comparación entre el
+movimiento humano, el ejecutado por el brazo robótico y el registrado por los
+instrumentos digitalizadores.
+
+En el presente proyecto, la \gls{cinematica} inversa adquiere una relevancia
+especial. Dado que los puntos de referencia del movimiento están definidos por
+las coordenadas de una palabra a reproducir, resulta necesario
+convertir dichas posiciones cartesianas en valores articulares para el \gls{robot}.
+De esta forma, para cada punto de la trayectoria se calculan los ángulos de
+las articulaciones, lo que permite ejecutar el movimiento con mayor precisión
+y continuidad.  
+
+Además, disponer de los valores articulares posibilita el uso de comandos
+específicos de la librería del \gls{robot} orientados a la interpolación en el
+espacio articular, lo cual mejora la precisión en la velocidad de ejecución.
+
+
+\subsubsection{Parámetros de Denavit–Hartenberg}
+
+Para la modelización sistemática de manipuladores robóticos se emplea de forma
+habitual la convención de Denavit–Hartenberg (DH), la cual permite describir la
+geometría de cada eslabón y articulación mediante un conjunto reducido de
+parámetros. Tal y como señalan Barrientos et al. \cite{barrientos2014}, esta
+metodología facilita la construcción de las matrices de transformación homogénea
+entre eslabones consecutivos, simplificando el análisis cinemático.
+
+En esta convención, cada articulación del \gls{robot} se asocia a un sistema de
+coordenadas, y la relación entre dos sistemas consecutivos $\{i-1\}$ y $\{i\}$
+se describe mediante cuatro parámetros:
+
+\begin{itemize}
+    \item $a_i$: distancia entre los ejes $Z_{i-1}$ y $Z_i$ medida a lo largo de $X_i$.
+    \item $\alpha_i$: ángulo entre $Z_{i-1}$ y $Z_i$ alrededor del eje $X_i$.
+    \item $d_i$: distancia entre los orígenes de los sistemas medida sobre el eje $Z_{i-1}$.
+    \item $\theta_i$: ángulo de rotación alrededor de $Z_{i-1}$ que lleva a alinear $X_{i-1}$ con $X_i$.
+\end{itemize}
+
+Con estos parámetros, la matriz de transformación homogénea que relaciona
+dos eslabones consecutivos se expresa como:
+
+\begin{equation}
+T_i^{i-1} =
+\begin{bmatrix}
+\cos \theta_i & -\sin \theta_i \cos \alpha_i & \sin \theta_i \sin \alpha_i & a_i \cos \theta_i \\
+\sin \theta_i & \cos \theta_i \cos \alpha_i & -\cos \theta_i \sin \alpha_i & a_i \sin \theta_i \\
+0 & \sin \alpha_i & \cos \alpha_i & d_i \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{eq:DH_matrix}
+\end{equation}
+
+La concatenación de estas transformaciones permite calcular la posición y
+orientación del efector final en función de las variables articulares. Este
+enfoque constituye la base para la \gls{cinematica} directa y, en consecuencia, para
+la resolución de la \gls{cinematica} inversa.
+
+En el contexto del presente proyecto, la parametrización mediante Denavit–
+Hartenberg resulta especialmente útil para familiarizarse con la estructura del
+brazo robótico empleado y para modelar sus movimientos con precisión. De este
+modo, se obtiene una herramienta sistemática para describir matemáticamente
+cada articulación y eslabón, lo que facilita la planificación de trayectorias y
+la validación de resultados experimentales.
+
+
+\subsection{Tareas realizadas para cumplir el objeto}
+
+En primer lugar, se llevó a cabo una familiarización con el entorno de trabajo, 
+haciendo especial énfasis en el \gls{robot}, su puesta en marcha, la programación básica 
+y las medidas de seguridad necesarias para su correcta operación.  
+
+Posteriormente, se desarrolló un programa en \gls{python} para controlar el \gls{robot} \acrfull{UR5} 
+mediante la librería oficial \texttt{ur\_rtde} \cite{ur_rtde}. 
+El control se realizó utilizando archivos \acrshort{CSV} que contenían las coordenadas de los puntos a dibujar.  
+
+Como ejercicio inicial, se escribieron las primeras 100 palabras del libro \textit{Don Quijote de la Mancha} \cite{cervantes1605},
+con la tableta gráfica \acrfull{WIPL}. A continuación, estas mismas palabras se reprodujeron con el \gls{robot} 
+sobre la misma tableta, con el fin de comparar los errores de digitalización entre ambos sistemas.  
+
+Una vez obtenidos los datos de las palabras escritas por los tres sistemas (humano, robot y tableta), 
+se procedió a su análisis y comparación.  
+
+Adicionalmente, se implementó una \gls{redneuronal} en \gls{matlab} 
+para la predicción de señales a partir de diferentes entradas, considerando tres casos:
+
+\begin{itemize}
+  \item Predicción del movimiento del robot a partir del movimiento humano (\acrshort{HTR}).
+  \item Predicción del movimiento registrado por la tableta a partir del movimiento del robot (\acrshort{RRT}).
+  \item Predicción del movimiento registrado por la tableta a partir del movimiento humano (\acrshort{HTRT}).
+\end{itemize}
+
+y analizando las metricas de error \acrfull{RMSE}, \acrfull{MAE} y \acrfull{MSE}
+para cada caso.
+
+De forma complementaria, también se desarrollaron programas en \gls{matlab} 
+para el preprocesamiento de los datos originales, generando un sistema de archivos homogéneo 
+que garantizara un formato común y facilitara la comparación entre conjuntos de datos.  
+
+Finalmente, tras el análisis de los resultados obtenidos con la tableta \acrfull{WIPL}, 
+se repitió el experimento empleando la tableta \acrfull{IOTP} y un sensor de movimiento 3D, 
+ampliando así el alcance del estudio. 
+
+Ademas, se tuvo que desarrollar e imprimir un soporte para los boligrafos de las tabletas,
+así como un soporte para el sensor 3D, que permitiera su correcta sujeción al efector final del robot.
+
+
+\subsection{Normas y referencias}
+\subsubsection{Normativa aplicada}
+\begin{itemize}
+  \item UNE-EN ISO 10218-1:2012. Robots y dispositivos robóticos. Requisitos de seguridad
+para robots industriales. Parte 1: Robots. (ISO 10218-1:2011)
+  \item UNE-EN ISO 10218-2. Robots y dispositivos robóticos. Requisitos de seguridad para
+robots industriales. Parte 2: Sistemas robot e integración. (ISO 10218-2:2011).
+  \item UNE-EN ISO 12100:2012. Seguridad de las máquinas. Principios generales 
+  para el diseño. Evaluación y reducción del riesgo.
+  \item UNE-EN 60204-1:2019. Seguridad de las máquinas. Equipo 
+  eléctrico de las máquinas. Parte 1: Requisitos generales.
+  \item Real Decreto 842/2002, de 2 de agosto, por el que se aprueba el Reglamento electrotécnico
+para baja tensión.
+  \item Real Decreto 1215/1997, de 18 de julio, por el que se establecen las disposiciones mínimas
+de seguridad y salud para la utilización por los trabajadores de los equipos de
+trabajo.
+  \item Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales.
+
+\end{itemize}
+
+% ---- Bibliografía ----
+\subsubsection{Referencias bibliográficas}
+\printbibliography[heading=none]
+
+\section{Descripción del trabajo realizado}\label{sec:trabajo-realizado}
+
+\subsection{Visión general de la solución adoptada}
+
+La solución adoptada se fundamenta en el desarrollo de una 
+plataforma experimental que integra distintos dispositivos de 
+captura de escritura y un robot colaborativo \acrshort{UR5}, con 
+el objetivo de analizar y modelar los errores introducidos en el 
+proceso de digitalización y reproducción de trazos manuscritos. 
+
+El sistema completo se organizó en cuatro fases principales:
+
+\begin{enumerate}
+  \item \textbf{Captura de datos.} 
+        Se emplearon tres instrumentos distintos: la tableta 
+        \acrfull{WIPL}, la tableta prototipo \acrfull{IOTP} y un sistema 
+        captor 3D construido a partir 
+        de potenciómetros y Arduino. Cada dispositivo registró las 
+        trayectorias manuscritas en sus propios formatos de salida, 
+        posteriormente unificados.
+  \item \textbf{Control del robot.} 
+        A través de \gls{python} y la librería \texttt{UR\_RTDE} se 
+        estableció comunicación en tiempo real con el 
+        \acrshort{UR5}. El robot recibió como entrada las 
+        trayectorias previamente capturadas y las reprodujo sobre 
+        el instrumento mediante un útil adaptado al extremo de su efector 
+        final.
+  \item \textbf{Procesamiento y análisis.} 
+        En \gls{matlab} se implementaron rutinas de calibración y 
+        transformación de coordenadas, asegurando la compatibilidad 
+        de datos entre los diferentes instrumentos. Además, se 
+        aplicaron técnicas de preprocesado para reducir ruido, 
+        homogeneizar longitudes de señales y calcular métricas de 
+        error entre las trayectorias humanas y robóticas.
+  \item \textbf{Modelado del error.} 
+        Se entrenaron redes neuronales con el fin de predecir la 
+        señal generada realmente a partir de la referencia humana. 
+        Este enfoque permitió evaluar cuantitativamente el error 
+        introducido por cada dispositivo y por el propio robot, sin 
+        necesidad de ejecutar físicamente todas las pruebas.
+\end{enumerate}
+
+Gracias a esta estructura modular, la plataforma permitió 
+comparar el comportamiento de distintos dispositivos de captura 
+bajo un mismo flujo de trabajo, cuantificando los errores 
+introducidos en cada etapa y extrayendo conclusiones sobre la 
+fiabilidad y aplicabilidad de los distintos métodos de 
+digitalización.
+
+\subsection{Diagrama de flujo del proyecto}
+
+El diagrama de flujo mostrado en la Figura~\ref{fig:Diagrama_flujo} 
+resume de manera esquemática el funcionamiento global del sistema 
+desarrollado en el TFG. Se distinguen claramente tres bloques 
+principales que se corresponden con las fases de captura de datos, 
+procesado y análisis, y reproducción de la escritura mediante el 
+robot colaborativo.
+
+En la primera fase, los distintos instrumentos digitalizadores 
+(\acrshort{WIPL}, \acrshort{IOTP} y sistema captor 3D) registran 
+las trazas manuscritas generadas por el usuario. Los datos se 
+almacenan en ficheros individuales por palabra, estructurados en 
+formato \texttt{CSV}, garantizando una organización homogénea y 
+compatible con los entornos de procesado posteriores.
+
+La segunda fase corresponde al procesado de la información. A 
+través de scripts desarrollados en MATLAB y Python se lleva a cabo 
+la estandarización de los ficheros y la calibración de señales. 
+
+
+Finalmente, en la tercera fase se realiza la comunicación con el 
+robot \acrshort{UR5} mediante la librería \texttt{UR\_RTDE}. Las 
+trayectorias capturadas se transmiten al robot, que se encarga de 
+reproducirlas directamente sobre el mismo dispositivo utilizado en 
+la captura inicial. De este modo, es posible comparar de manera 
+directa la escritura humana y la réplica robótica bajo un mismo 
+flujo de trabajo.
+
+En conjunto, el diagrama de flujo ilustra la naturaleza modular y 
+secuencial de la solución adoptada, donde cada bloque cumple una 
+función específica pero integrada en un pipeline común que asegura 
+la trazabilidad completa de los datos desde su captura hasta el 
+modelado del error.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5,keepaspectratio]{figuras/DiagramaTFG.png}
+\caption{Diagrama de flujo del proyecto.}
+\label{fig:Diagrama_flujo}
+\end{figure}
+
+\subsection{Requisitos de diseño}
+
+Durante la fase inicial del proyecto se establecieron una serie 
+de requisitos de diseño que guiaron el desarrollo de la solución 
+adoptada. Estos requisitos se clasifican en funcionales y no 
+funcionales.
+
+\subsubsection*{Requisitos funcionales}
+\begin{itemize}
+  \item El sistema debe permitir la captura de escritura manuscrita 
+        mediante distintos dispositivos de entrada (Wacom 
+        \acrshort{WIPL}, Wacom \acrshort{IOTP} y sistema captor 3D).
+  \item Los datos obtenidos deben almacenarse en ficheros 
+        estructurados en formato \texttt{CSV}, con un fichero por 
+        palabra o ejercicio. Cada fichero debe contener cuatro 
+        columnas: Tiempo (s), Coordenada X, Coordenada Y y 
+        Coordenada Z.
+  \item La base de datos debe organizarse en una estructura jerárquica 
+        que distinga el dispositivo de captura empleado 
+        (\acrshort{WIPL}, \acrshort{IOTP}, P) y el origen de la señal 
+        (HT, R, RT).
+  \item El robot colaborativo \acrshort{UR5} debe ser capaz de 
+        reproducir las trayectorias capturadas escribiendo 
+        directamente sobre el mismo instrumento utilizado en la 
+        captura de datos.
+  \item El software de control debe gestionar la comunicación en 
+        tiempo real con el robot, garantizando la transmisión 
+        continua de trayectorias.
+  \item El sistema debe incluir un modelo predictivo, basado en 
+        redes neuronales, cuyo entrenamiento permita obtener métricas 
+        de error (\acrshort{RMSE}, \acrshort{MAE}, \acrshort{MSE}) 
+        para comparar la señal real con la predicha y evaluar así la 
+        precisión del modelo.
+\end{itemize}
+
+\subsubsection*{Requisitos no funcionales}
+\begin{itemize}
+  \item El sistema debe ser compatible con los formatos de datos 
+        generados por los dispositivos empleados (\texttt{CSV}).
+  \item El software desarrollado debe ejecutarse en entornos 
+        multiplataforma (Python, MATLAB) y ser fácilmente adaptable 
+        a otros escenarios de prueba.
+  \item El diseño debe respetar los principios de seguridad 
+        aplicables a robots colaborativos, siguiendo las normas 
+        ISO~10218 e ISO/TS~15066.
+  \item La solución debe permitir la trazabilidad completa de los 
+        datos, desde la captura inicial hasta la reproducción 
+        robótica y el análisis posterior.
+  \item El sistema debe mantenerse modular, de forma que sea 
+        posible incorporar nuevos dispositivos de captura o 
+        algoritmos de análisis sin necesidad de rediseñar la 
+        arquitectura completa.
+\end{itemize}
+
+
+\subsection{Hardware y software utilizados}
+\subsubsection{Hardware}
+\paragraph{Brazo robótico \acrfull{UR5} de Universal Robots.}El \acrshort{UR5} es un robot colaborativo de seis grados de libertad desarrollado 
+por Universal Robots, diseñado para tareas de manipulación ligera y programación sencilla \cite{ur5manual}. 
+En este proyecto se utilizó como actuador principal encargado de reproducir sobre la tableta 
+los mismos trazos previamente capturados de la escritura humana, garantizando la repetibilidad 
+y precisión necesarias para el análisis de errores de digitalización.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{figuras/UR5.png}
+\caption{Brazo robótico UR5 de Universal Robots de \cite{ur5manual}.}
+\label{fig:UR5}
+\end{figure}
+
+\paragraph{Tableta gráfica \acrfull{WIPL} de Wacom.}La \acrfull{WIPL} es una tableta digitalizadora profesional desarrollada por Wacom.  
+Según el manual de usuario \cite{wacom_manual}, este dispositivo admite entrada tanto con lápiz como táctil, 
+dispone de un área activa amplia (311 $\times$ 216 mm en el modelo Large) y está equipada con ocho 
+teclas programables \textit{ExpressKeys} y un \textit{Touch Ring} multifunción que facilitan la interacción 
+con aplicaciones gráficas \cite{wacom_manual}. El lápiz inalámbrico que la acompaña no requiere batería, 
+es sensible a la presión y a la inclinación, lo que permite registrar con precisión la dinámica del trazo 
+humano.
+
+En el presente proyecto, la \acrshort{WIPL} se empleó como dispositivo de referencia para la captura 
+de escritura manuscrita. Los datos obtenidos se almacenaron en archivos \texttt{CSV} que sirvieron 
+posteriormente como entrada para el robot \acrshort{UR5} y para los análisis comparativos. Gracias a 
+su resolución y estabilidad, la tableta proporcionó una base fiable para el estudio de errores de 
+digitalización y para el entrenamiento de la red neuronal. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{figuras/WIPL.png}
+\caption{Tableta gráfica Wacom Intuos Pro Large de \cite{wacom_manual}.}
+\label{fig:Wacom}
+\end{figure}
+
+\paragraph{Tableta gráfica \acrfull{IOTP} de Wacom.}La \acrfull{IOTP} es una tableta digitalizadora en fase de prototipo desarrollada por Wacom, 
+concebida para investigación académica y aplicaciones educativas. El modelo utilizado en este 
+proyecto corresponde a la versión de 10,3 pulgadas, equipada con una pantalla de tinta electrónica 
+(\textit{E-Ink Digital Ink Screen Display}) de 297 $\times$ 182 mm, con resolución de 
+1872 $\times$ 1404 píxeles (226 dpi) \cite{iotp_manual}.  
+
+La tableta incorpora un lápiz digital \textit{Wacom EMR}, sensible a la presión, a la altura 
+y a la inclinación, lo que permite capturar de manera precisa las características dinámicas de la 
+escritura manuscrita. Los datos se registran en formato \texttt{InkML}, que incluye coordenadas 
+$(x,y)$, presión ejercida, inclinación del lápiz y marcas temporales. Estos ficheros se exportan 
+directamente a un ordenador mediante conexión USB Type-C, siendo reconocida por el sistema como 
+un dispositivo de almacenamiento masivo. El software proporcionado por la propia empresa genera 
+tres tipos de archivos asociados a cada captura: un mapa de bits (\texttt{.bmp}), un fichero 
+tabulado (\texttt{.csv}) y un fichero estructurado en \texttt{InkML}. Entre ellos, el formato 
+\texttt{.csv} fue el seleccionado para la integración con el robot, ya que permitía transferir 
+de manera directa las coordenadas a reproducir en el experimento \cite{iotp_manual}.
+
+En el presente proyecto, la \acrshort{IOTP} se empleó como dispositivo alternativo de 
+captura de escritura, con el objetivo de estudiar el error asociado al uso de distintos 
+instrumentos de digitalización. Cada tableta, al contar con características técnicas y 
+niveles de precisión diferentes, ofrece resultados propios que influyen en el análisis 
+final. Los datos obtenidos con la \acrshort{IOTP} se procesaron siguiendo el mismo flujo 
+de trabajo que en el caso de la \acrshort{WIPL}, lo que permitió evaluar cómo las 
+diferencias entre dispositivos se reflejan en los errores de digitalización y en las 
+posibles aplicaciones futuras de este tipo de sistemas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{figuras/IOTP.png}
+\caption{Tableta gráfica Wacom IOTP de \cite{iotp_manual}.}
+\label{fig:IOTP}
+\end{figure}
+
+
+\paragraph{Sensor de movimiento 3D mediante potenciometros de 3 ejes.}Además de las tabletas gráficas, se utilizó un sistema de captura de movimiento 
+tridimensional diseñado de forma experimental. Este dispositivo estaba compuesto 
+por tres potenciómetros conectados a una placa \textit{Arduino}, cuya señal 
+permitía estimar la posición de un punto en el espacio tras un proceso de 
+calibración previo.  
+
+Para la adquisición de datos se desarrolló un programa en \textbf{Matlab}, que 
+se comunicaba directamente con el entorno \textit{Arduino IDE} mediante el puerto 
+serie. El código en la placa Arduino se encargaba de leer de forma periódica las 
+entradas analógicas asociadas a los potenciómetros y transmitirlas a través del 
+puerto serie a alta velocidad. Matlab recibía estas tramas de datos en tiempo real, 
+ejecutaba la calibración y procesaba las señales para reconstruir la trayectoria 
+espacial realizada.  
+
+Como resultado, el sistema generaba ficheros en formato \texttt{CSV} que contenían 
+las coordenadas tridimensionales $(x,y,z)$ de cada punto registrado. Estos datos 
+se integraron en el mismo flujo de trabajo que los obtenidos con las tabletas 
+gráficas, lo que permitió analizar el error de digitalización no solo en el plano, 
+sino también en el eje de profundidad.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figuras/sistemapotrob.png.jpg}
+\caption{Sensor de movimiento 3D mediante potenciometros y robot.}
+\label{fig:Sensor3D}
+\end{figure}
+
+\paragraph{Ordenador de sobremesa}
+\todo{Incluir una tabla con las características técnicas del ordenador.}
+\paragraph{Impresora 3D}
+\todo{Modelo y características técnicas de la impresora 3D.}
+
+\subsubsection{Software}
+En el desarrollo del proyecto se emplearon distintos programas y 
+entornos de programación. Cada uno de ellos cumplió una función 
+específica tanto en la fase de captura de datos como en la de 
+procesado y validación de resultados.
+
+\paragraph{Entorno de desarrollo \acrshort{IDE} PyCharm Community Edition 2021.2.3.}\textit{PyCharm} es un entorno de desarrollo integrado (\acrshort{IDE}) 
+especializado en programación con Python. Ofrece herramientas 
+avanzadas para la edición de código, depuración, control de 
+versiones y gestión de librerías, lo que facilita el desarrollo 
+estructurado de proyectos de software. La versión \textit{Community 
+Edition} es gratuita y de código abierto, manteniendo la mayoría 
+de las funcionalidades necesarias para el ámbito académico.\cite{pycharm}
+
+En el contexto del TFG se empleó como entorno principal para la 
+implementación de los programas en Python. PyCharm permitió 
+integrar de manera sencilla las librerías externas utilizadas, 
+organizar los módulos de código y depurar los scripts encargados 
+del procesado de datos y de la comunicación con el robot 
+\acrshort{UR5}. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figuras/interfazpycarm.png}
+\caption{Entorno de desarrollo PyCharm Community Edition 2021.2.3.}
+\label{fig:PyCharm}
+\end{figure}
+
+
+\subparagraph{Lenguaje de programación Python 3.12.0.}\textit{Python}
+es un lenguaje de programación interpretado, de 
+alto nivel y con una sintaxis sencilla, ampliamente extendido en 
+ámbitos científicos y de ingeniería. Su diseño orientado a la 
+legibilidad y la gran disponibilidad de librerías lo convierten en 
+una herramienta idónea para el desarrollo de aplicaciones de 
+análisis de datos, inteligencia artificial y control de hardware. \cite{python}
+
+En el marco del TFG se empleó la versión 3.12.0, que permitió 
+implementar los módulos encargados de la lectura y procesado de 
+los ficheros \texttt{CSV} generados por los dispositivos de 
+captura. Asimismo, Python se utilizó como interfaz de 
+comunicación con el robot \acrshort{UR5} mediante la librería 
+\texttt{UR\_RTDE}, transmitiendo las trayectorias manuscritas al 
+manipulador para su reproducción física. 
+
+\subparagraph{Librerías de Python}
+
+\begin{itemize}
+  \item \textbf{NumPy}: empleada para cálculos numéricos, 
+        manipulación de matrices y operaciones algebraicas 
+        necesarias en el tratamiento de señales \cite{numpy}.
+  \item \textbf{Pandas}: permitió organizar los datos en 
+        estructuras tipo tabla (DataFrames), facilitando la 
+        lectura y escritura de archivos CSV \cite{pandas}.
+  \item \textbf{Matplotlib}: utilizada para la creación de 
+        gráficos y la representación visual de los resultados 
+        obtenidos en las pruebas \cite{matplotlib}.
+  \item \textbf{UR\_RTDE}: proporcionó la interfaz de 
+        comunicación en tiempo real con el robot 
+        \acrshort{UR5}, haciendo posible el envío de trayectorias 
+        y la monitorización de variables del manipulador \cite{ur_rtde}.
+\end{itemize}
+
+\paragraph{Entorno de desarrollo MATLAB R2023b}
+
+\textit{MATLAB} es un entorno de programación y cálculo numérico 
+ampliamente utilizado en investigación y desarrollo científico–
+técnico. Proporciona un lenguaje propio orientado a matrices, así 
+como un extenso conjunto de librerías para el análisis de datos, 
+representación gráfica, modelado matemático y diseño de 
+algoritmos.\cite{matlab2023} 
+
+En el presente TFG se empleó la versión R2023b, que permitió 
+implementar rutinas de preprocesado y calibración de los datos 
+capturados por los diferentes instrumentos de escritura. Asimismo, 
+MATLAB se utilizó para realizar análisis estadísticos de error y 
+para el entrenamiento y validación de la red neuronal destinada a 
+evaluar el rendimiento de cada dispositivo. Adicionalmente, para el caso
+3D, el entorno sirvió de puente con la placa Arduino, mediante la adquisición en 
+tiempo real de los valores analógicos de los potenciómetros, lo 
+que facilitó la integración de los datos en el flujo de trabajo 
+general del proyecto.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figuras/interfazMatlab.png}
+\caption{Entorno de desarrollo MATLAB R2023b.}
+\label{fig:MATLAB}
+\end{figure}
+
+\paragraph{Software para captura de \acrshort{WIPL}. HandWriting Capture.}Para la adquisición de datos con la tableta Wacom \acrshort{WIPL} 
+se empleó el software \textit{HandWriting Capture V1.0}, 
+desarrollado por el Grup de Tractament del Senyal del 
+Tecnocampus Mataró Maresme.\cite{HandWritingCapture} 
+
+Esta aplicación permitió registrar de manera directa las 
+trazas manuscritas realizadas sobre la tableta y exportarlas en 
+archivos \texttt{CSV}, lo que facilitó su posterior integración 
+en el flujo de trabajo del proyecto. El programa ofrece una 
+interfaz sencilla en la que es posible crear o cargar usuarios, 
+ejecutar ejercicios de escritura y almacenar los resultados en 
+ficheros de datos. Dichos archivos se guardan automáticamente en 
+la carpeta \texttt{data} de la aplicación, garantizando una 
+organización homogénea para todas las sesiones de captura.\cite{HandWritingCapture} 
+
+En el marco del TFG, esta herramienta se utilizó como fuente 
+principal de datos manuscritos para la tableta \acrshort{WIPL}, 
+asegurando la compatibilidad con los entornos de procesado 
+implementados en Python y MATLAB.
+
+\begin{figure}[H]
+\centering  
+\includegraphics[width=0.8\textwidth]{figuras/interfazWIPL.png}
+\caption{Software de captura de datos desde la tableta Wacom \acrshort{WIPL}.}
+\label{fig:WacomSoftware} 
+\end{figure}
+
+\paragraph{Software para captura de \acrshort{IOTP}}La captura de datos de la tableta \acrshort{IOTP} se realizó a 
+través del software experimental desarrollado por Wacom y 
+distribuido junto con el dispositivo. El programa está basado en 
+el protocolo \acrshort{MTP} (\textit{Media Transfer Protocol}), lo 
+que permite que la tableta se comporte como un dispositivo de 
+almacenamiento externo, similar a una cámara digital o a un 
+teléfono móvil. De este modo, los archivos de escritura pueden 
+transferirse directamente al ordenador sin necesidad de 
+aplicaciones adicionales\cite{iotp_manual}. 
+
+El software genera y gestiona ficheros en formato 
+\texttt{InkML}, que contienen tanto las coordenadas $(x,y)$ como 
+la información dinámica asociada (presión, inclinación y 
+marcas temporales). Además, junto a cada captura se producen 
+archivos complementarios en formato \texttt{.bmp} y 
+\texttt{.csv}, siendo este último el seleccionado en el marco del 
+TFG por su compatibilidad con los entornos de procesado en 
+Python y MATLAB \cite{iotp_manual}. 
+
+La aplicación proporciona también herramientas auxiliares, como 
+el programa \textit{InkmlConverter}, que permite generar ficheros 
+\texttt{InkML} a partir de imágenes de plantilla en mapa de bits, 
+para ser utilizadas como fondo de referencia en la escritura. 
+Gracias a esta funcionalidad, es posible personalizar los 
+ejercicios de captura y mantener un control preciso sobre el 
+contenido manuscrito. 
+
+En el contexto del TFG, este software se empleó para registrar, 
+almacenar y transferir al ordenador las sesiones de escritura 
+realizadas con la \acrshort{IOTP}, integrando posteriormente los 
+datos en el flujo de trabajo común junto con los obtenidos de la 
+\acrshort{WIPL}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figuras/interfazIOTP.png}
+\caption{Software de captura de datos desde la tableta Wacom \acrshort{IOTP}.}
+\label{fig:IOTPSoftware}
+\end{figure}
+
+
+\paragraph{Software Arduino IDE.}El \textit{Arduino IDE} es el entorno de desarrollo oficial para la 
+programación de placas basadas en microcontroladores de la 
+plataforma Arduino. Este software permite escribir, compilar y 
+cargar programas (denominados \textit{sketches}) en la placa a 
+través de una interfaz sencilla y multiplataforma. Además, 
+incluye un monitor serie que facilita la comunicación en tiempo 
+real entre el microcontrolador y el ordenador. 
+
+En el marco del TFG, el Arduino IDE se utilizó para desarrollar y 
+transferir el código encargado de la lectura analógica de los tres 
+potenciómetros del sistema captor 3D. Los valores obtenidos se 
+enviaban de forma continua por el puerto serie, de modo que 
+pudieran ser adquiridos posteriormente en MATLAB para su 
+procesado, calibración y análisis. 
+
+
+\begin{figure}[H]
+\centering  
+\includegraphics[width=0.8\textwidth]{figuras/interfazIDEArduino.png}
+\caption{Entorno de desarrollo Arduino IDE.}
+\label{fig:ArduinoIDE}
+\end{figure}
+
+\subsection{Dificultades encontradas y soluciones adoptadas}
+
+Durante el desarrollo del proyecto se identificaron diferentes 
+dificultades relacionadas con la captura y el análisis de datos. 
+A continuación, se describen las más relevantes junto con las 
+medidas adoptadas para su resolución, incorporando ejemplos 
+gráficos que ilustran el efecto de cada problema.
+
+\subsubsection*{Errores por separación excesiva del lápiz}
+En la captura realizada con la tableta \acrshort{WIPL} se 
+observó que, cuando el lápiz se separaba demasiado de la 
+superficie, la tableta dejaba de registrar puntos intermedios. 
+Esto provocaba saltos bruscos en las coordenadas registradas y 
+picos anómalos en la señal de velocidad, que no correspondían a 
+un movimiento real de escritura. Esto se traducia en movimientos bruscos 
+del robot pasando de una coordenada a otra sin suavizado, 
+lo que afectaba a la calidad de la reproducción.
+La solución adoptada consistió en mantener el lápiz siempre 
+próximo a la superficie durante el ejercicio, incluso en los 
+movimientos de transición sin contacto directo, evitando así 
+pérdidas de muestreo.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figuras/prueba_picovelocidad.png}
+  \caption{Ejemplo de pico de velocidad generado por ausencia de 
+           puntos intermedios al separar demasiado el lápiz de la 
+           tableta.}
+  \label{fig:picoVelocidad}
+\end{figure}
+
+\subsubsection*{Errores por activación involuntaria de botones}
+Otro problema detectado estuvo asociado al lápiz digital de la 
+\acrshort{WIPL}. Durante la escritura, la pulsación accidental 
+de los botones laterales provocaba la aparición de valores 
+anómalos en la coordenada Z (valores distintos de 0 o 1), lo que 
+se traducía en distorsiones en la señal y nuevos picos de 
+velocidad.  
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figuras/boligrafoWacom.png}
+  \caption{Lápiz digital de la tableta Wacom \acrshort{WIPL}, con los
+           botones laterales que pueden activarse 
+           involuntariamente durante la escritura.}
+  \label{fig:boligrafoWacom}
+\end{figure}
+
+La solución consistió en evitar la activación de los botones 
+durante las sesiones experimentales y, en caso necesario, 
+deshabilitar sus funciones en la configuración del dispositivo.
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{figuras/z3.png}
+  \caption{Valores anómalos de la coordenada Z asociados a la 
+           activación involuntaria de los botones del lápiz, que 
+           generan distorsiones en la señal de velocidad.}
+  \label{fig:Z3}
+\end{figure}
+
+\subsubsection*{Desfases entre señales humanas y robóticas}
+Durante la comparación de trayectorias \acrlong{R} y \acrlong{RT} 
+se identificaron desfases tanto espaciales como temporales. Este 
+problema dificultaba la superposición directa de señales, lo que 
+impedía un análisis cuantitativo inmediato.  
+
+Para abordar esta incidencia se implementaron técnicas de 
+preprocesado en MATLAB. En particular, se aplicó el centrado de 
+trayectorias mediante el cálculo del centroide, con el fin de 
+reducir desplazamientos espaciales iniciales, y se utilizó 
+interpolación temporal para homogeneizar la longitud de las 
+señales. Ambas correcciones se mantuvieron dentro del flujo de 
+trabajo, dado que no modificaban sustancialmente el error real de 
+los dispositivos y mejoraban la comparabilidad de las trayectorias.  
+
+En cambio, la técnica de alineación temporal \textit{Dynamic Time 
+Warping} (DTW), aunque inicialmente considerada, fue descartada. 
+Su aplicación implicaba alterar la dinámica original de las 
+señales, lo que hubiera supuesto perturbar los errores reales que 
+se pretendían analizar. Por este motivo, se decidió no emplearla y 
+trasladar el tratamiento de los desfases restantes al modelado con 
+redes neuronales, permitiendo que el modelo aprendiera de manera 
+natural las discrepancias presentes entre trayectorias.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figuras/Comparacion Ejes.png}
+  \caption{Ejemplo de desfase entre la trayectoria \acrshort{R} 
+          y la trayectoria \acrshort{RT}.}
+\end{figure}
+
+\subsubsection*{Velocidad excesiva en la captura 3D}
+En el caso del sistema captor 3D, la primera toma de datos 
+realizada por el usuario se llevó a cabo con una velocidad de 
+ejecución demasiado elevada. Al reproducirse en el robot, esta 
+dinámica suponía un riesgo para la integridad del sistema de 
+sujeción y del propio sistema captor 3D, ya que los 
+movimientos eran más rápidos de lo que el montaje podía tolerar.  
+
+Ante este problema se decidió repetir la toma de datos, esta vez 
+con una escritura más lenta y precisa por parte del usuario. De 
+este modo, el robot pudo reproducir las trayectorias sin poner en 
+riesgo los elementos mecánicos ni comprometer la estabilidad del 
+experimento.
+
+En conjunto, la resolución de estas incidencias permitió obtener 
+un flujo de datos más robusto y representativo, garantizando que 
+los errores analizados fuesen intrínsecos al sistema y no fruto de 
+artefactos de captura o preprocesado.
+
+\subsection{Disposición física de los elementos}
+
+La Figura~\ref{fig:disposicionfisica} muestra la disposición 
+física y las conexiones entre los diferentes componentes del 
+sistema experimental. El ordenador actúa como unidad central de 
+procesamiento, ejecutando los programas desarrollados en Python y 
+MATLAB para la lectura de datos, el preprocesado de ficheros y el 
+envío de trayectorias al robot. 
+
+El ordenador se conecta al controlador del robot \acrshort{UR5} a 
+través de un cable Ethernet, lo que permite la comunicación en 
+tiempo real mediante la librería \texttt{UR\_RTDE}. De manera 
+paralela, el instrumento digitalizador empleado en cada experimento 
+(\acrshort{WIPL}, \acrshort{IOTP} o sistema captor 3D) se conecta 
+al ordenador por USB, asegurando la adquisición directa de los 
+datos manuscritos en formato digital. 
+
+El controlador del robot está vinculado físicamente al 
+\textit{teach pendant} (interfaz manual), que permite ejecutar 
+operaciones básicas de configuración y seguridad. Finalmente, el 
+robot recibe las trayectorias procesadas desde el ordenador y las 
+reproduce directamente sobre el instrumento digitalizador, 
+garantizando así la coherencia entre la escritura humana y la 
+réplica robótica. 
+
+Esta disposición modular asegura la trazabilidad de los datos, 
+desde la captura inicial hasta la reproducción física de las 
+trayectorias, y facilita la sustitución de instrumentos de 
+captura sin necesidad de modificar la arquitectura general del 
+sistema.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figuras/disposicionfisica.png}
+\caption{Esquema de la disposición física del sistema.}
+\label{fig:disposicionfisica}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{figuras/disposicionreal.png}
+\caption{Disposición real del sistema en el laboratorio.}
+\label{fig:disposicionreal}
+\end{figure}
+
+\subsection{Descripción detallada de la solución}
+\todo{TODO lo gordo}
+\todo{Sacar foto de la configuracion manual de las herramientas del robot en el teach pendant}
+\todo{Poner todo esto en la parte de 3D}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=18mm]
+\tikzset{
+  block/.style   = {rectangle, rounded corners, minimum width=4cm, minimum height=1cm,
+                    text centered, draw=black, fill=blue!20},
+  process/.style = {rectangle, minimum width=4cm, minimum height=1cm,
+                    text centered, draw=black, fill=green!20},
+  data/.style = {trapezium, trapezium left angle=70, trapezium right angle=70,
+               minimum width=4cm, minimum height=1cm, text centered, draw=black, fill=orange!20},
+  arrow/.style   = {thick, -{Stealth[length=3mm,width=2mm]}}
+}
+
+\node (pots)    [block]                   {Potenciómetros (x3)};
+\node (arduino) [process, below of=pots]  {Placa Arduino - Lectura analógica + envío serie};
+\node (matlab)  [process, below of=arduino] {Programa Matlab - Recepción + Calibración + Procesado};
+\node (csv)     [data,    below of=matlab] {Archivo CSV (x,y,z)};
+
+\draw[arrow] (pots) -- (arduino);
+\draw[arrow] (arduino) -- node[right]{\small Puerto serie} (matlab);
+\draw[arrow] (matlab) -- (csv);
+\end{tikzpicture}
+\caption{Flujo de funcionamiento del sistema captor 3D (vertical).}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{forest}
+  for tree={
+     font=\ttfamily,
+     grow'=south,
+     child anchor=north,
+     parent anchor=south,
+     anchor=west,
+     edge={ultra thin},
+     l sep=8pt,
+     s sep=4pt
+    }
+ [Base de Datos
+     [WIPL
+         [HT]
+         [R]
+         [RT]
+     ]
+     [IOTP
+         [HT]
+         [R]
+         [RT]
+     ]
+     [P
+         [HP]
+         [R]
+         [RP]
+     ]
+  ]
+\end{forest}
+\caption{Estructura jerárquica de los directorios de la base de datos}
+\label{fig:estructuraDirectorios}
+\end{figure}
+
+
+\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				\textbf{Tiempo (s)} & \textbf{Coordenada X} & \textbf{Coordenada Y} & \textbf{Coordenada Z} \\
+				\hline
+				0.000 & 12.345 & 67.890 & 0.000 \\
+				0.008 & 12.350 & 67.895 & 0.000 \\
+				0.016 & 12.360 & 67.910 & 1.000 \\
+				\vdots & \vdots & \vdots & \vdots \\
+				\hline
+			\end{tabular}
+			\caption{Estructura de los ficheros de datos por palabra.}
+            \label{cuad:ArquitecturaDatos}
+\end{table}
+
+
+
+\subsection{Resultados}
+\subsubsection{Metodología experimental}
+\pendiente
+
+\subsubsection{Aplicación del modelo entrenado}
+\pendiente
+
+\subsubsection{Resultados obtenidos en metricas clave}
+
+
+\subsection{Conclusiones finales}
+\pendiente
+
+\subsection{Posibles mejoras y trabajo futuro}
+\pendiente
+
+
+
+
+% ==============================================
+% DOCUMENTO II: MEMORIA DE CÁLCULO
+% ==============================================
+\chapter{Documento II: Memoria de Cálculo}
+
+\addcontentsline{toc}{chapter}{Documento II: Memoria de Cálculo}
+\section{Hipótesis, condiciones de contorno y criterios de diseño}
+\section{Modelos matemáticos y ecuaciones empleadas}
+\section{Procedimientos de cálculo y dimensionamiento}
+\section{Resultados de cálculo (tablas y figuras)}
+\section{Verificación, validación y análisis de incertidumbre}
+\section{Conclusiones de la memoria de cálculo}
+
+
+
+
+
+
+\clearpage
+
+% ==============================================
+% DOCUMENTO III: PLIEGO DE CONDICIONES TÉCNICAS
+% ==============================================
+\chapter{Documento III: Pliego de Condiciones Técnicas}
+\addcontentsline{toc}{chapter}{Documento III: Pliego de Condiciones Técnicas}
+\section{Condiciones generales}
+\section{Clasificación de la instalación}
+\section{Criterios de diseño y ejecución}
+\section{Materiales y equipos}
+\section{Condiciones de montaje}
+\section{Programa de mantenimiento}
+\section{Pruebas y puesta en servicio}
+\section{Documentación necesaria}
+
+
+
+
+
+\clearpage
+
+% ==============================================
+% DOCUMENTO IV: PRESUPUESTO
+% ==============================================
+\chapter{Documento IV: Presupuesto}
+
+
+\addcontentsline{toc}{chapter}{Documento IV: Presupuesto}
+\section{Cuadro de precios unitarios}
+\section{Medición y valoración}
+\section{Resumen por capítulos}
+\section{Presupuesto de ejecución material}
+\section{Costes indirectos y gastos generales}
+\section{Presupuesto total}
+
+
+
+
+\clearpage
+
+% ==============================================
+% DOCUMENTO V: ESQUEMAS (CONEXIONADO DE BLOQUES)
+% ==============================================
+\chapter{Documento V: Esquemas y Conexionados}
+\addcontentsline{toc}{chapter}{Documento V: Esquemas y Conexionados}
+\section{Diagrama de bloques del sistema}
+\section{Esquemas de comunicaciones / red}
+
+\clearpage
+% ==============================================
+% DOCUMENTO VI: ANEXOS
+% ==============================================
+\chapter{Documento VI: Anexos}
+
+
+
+\addcontentsline{toc}{chapter}{Documento VI: Anexos}
+\section{Listados de código y scripts}
+\todo{Codigo fuente del control del robot en Python.}
+\todo{Codigo fuente del preprocesamiento de datos en Matlab para cada caso.}
+\todo{Codigo de Arduino IDE para el sensor 3D.}
+\todo{Codigo fuente de la red neuronal en Matlab.}
+\section{Manuales / datasheets relevantes}
+
+
+
+
+\end{document}
+

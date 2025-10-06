@@ -1,0 +1,10 @@
+# Ignora todo por defecto
+*
+
+# Pero no ignores estos:
+!.gitignore
+!main.tex
+!main.pdf
+!library.bib       # cambia el nombre si tu .bib se llama distinto
+!figuras/
+!figuras/**
